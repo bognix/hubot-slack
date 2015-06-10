@@ -244,8 +244,7 @@ class SlackBot extends Adapter
     @robot.logger.debug "Sending reply"
 
     for msg in messages
-      # TODO: Don't prefix username if replying in DM
-      @send envelope, "#{envelope.user.name}: #{msg}"
+      @send envelope, if envelope.room == envelope.user.name then "#{msg}" else "@#{envelope.user.name}: #{msg}"
 
   topic: (envelope, strings...) ->
     channel = @client.getChannelGroupOrDMByName envelope.room
